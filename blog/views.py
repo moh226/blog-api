@@ -6,13 +6,18 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 
+
+
+
 class OwnershipRequiredMixin:
     def _check_ownership(self, obj):
         if obj.author != self.request.user:
             return Response({'detail': 'You do not have permission to perform this action.'}, status=403)
         return None
 
-# Create your views here.
+
+
+
 class ArticleViewSet(OwnershipRequiredMixin, ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
